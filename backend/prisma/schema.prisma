@@ -1,0 +1,349 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id          String    @id
+  name        String
+  email       String    @unique
+  password    String
+  role        String
+  status      String
+  lastLogin   DateTime?
+  permissions Json
+}
+
+model Vehicle {
+  id              String  @id
+  regNumber       String
+  make            String
+  model           String
+  year            Int
+  category        String
+  ownershipType   String
+  capacity        String
+  fuelType        String
+  status          String
+  driverId        String?
+  odometer        Int
+  location        Json
+  speed           Int
+  lastService     String
+  insurance       String
+  fitness         String
+  permit          String
+  utilization     Int
+  purchasedAgency String
+  vehicleValue    Int
+  emiEnabled      String
+  monthlyEMI      Int
+  loanBank        String
+}
+
+model Driver {
+  id                String  @id
+  name              String
+  phone             String
+  altPhone          String
+  dob               String
+  address           String
+  dlNumber          String
+  licenseCategory   String
+  licenseExpiry     String
+  experience        Int
+  emergencyContact  String
+  status            String
+  assignedVehicle   String?
+  fuelScore         Int
+  safetyScore       Int
+  onTimeDelivery    Int
+  customerRating    Float
+  totalTrips        Int
+  totalKm           Int
+  violations        Int
+  salary            Int
+  advance           Int
+  attendance        Int
+  aadhaarNumber     String
+  panNumber         String
+  supervisorName    String
+  supervisorHistory Json
+  bankDetails       Json    @default("{}")
+  photo             String?
+}
+
+model Trip {
+  id               String   @id
+  voucherNo        String
+  origin           String
+  destination      String
+  stops            Json
+  viaStops         Json
+  status           String
+  approvalStatus   String
+  rejectionReason  String
+  driverId         String?
+  vehicleId        String?
+  customer         String
+  customerType     String   @default("Market")
+  contactPerson    String
+  contactNo        String
+  address          String
+  category         String
+  segment          String
+  businessGroup    String
+  employeeId       String
+  placementDate    String
+  noOfVehicles     Int
+  vehicleLoadType  String
+  cargo            String
+  content          String
+  rateType         String
+  weight           Float
+  packages         Int
+  rate             Int
+  freight          Int
+  loadingCharges   Int
+  unloadingCharges Int
+  otherCharges     Int
+  commission       Int
+  advance          Int
+  paymentTerms     String
+  creditDays       Int
+  total            Int
+  balance          Int
+  volume           Int
+  plannedDate      String
+  actualDeparture  String?
+  eta              String
+  distance         Int
+  approxTimeHrs    Int
+  plannedKm        Int
+  actualKm         Int
+  tollCost         Int
+  fuelCost         Int
+  revenue          Int
+  pod              Boolean
+  delay            Int
+  notes            String?
+  placementConfirmed Boolean @default(false)
+  placementDateTime  String?
+  placementRemarks   String?
+  cnNumber           String?
+  cnDate             String?
+  consigneeName      String?
+  consigneeAddress   String?
+  consigneeContact   String?
+  createdAt        DateTime @default(now())
+}
+
+model FuelEntry {
+  id            String   @id
+  vehicleId     String
+  date          String
+  liters        Float
+  pricePerLiter Float
+  totalCost     Int
+  odometer      Int
+  kmpl          Float
+  station       String
+  fuelCardUsed  Boolean
+  tripId        String?
+  createdAt     DateTime @default(now())
+}
+
+model MaintenanceRecord {
+  id                  String   @id
+  vehicleId           String
+  type                String
+  description         String
+  date                String
+  status              String
+  cost                Int
+  vendor              String
+  estimatedCompletion String
+  parts               Json
+  createdAt           DateTime @default(now())
+}
+
+model ComplianceRecord {
+  vehicleId      String   @id
+  rc             Json
+  insurance      Json
+  fitness        Json
+  pollution      Json
+  statePermit    Json
+  nationalPermit Json
+  updatedAt      DateTime @updatedAt
+}
+
+model Consignment {
+  id                   String   @id
+  cnNumber             String
+  cnDate               String
+  docType              String
+  against              String
+  againstNo            String
+  vehicleId            String
+  source               String
+  destination          String
+  consignor            String
+  consignorLocation    String
+  consignorGstin       String
+  consignee            String
+  consigneeLocation    String
+  consigneeGstin       String
+  billingParty         String
+  billingPartyLocation String
+  billingPartyGstin    String
+  deliveryAt           String
+  loadType             String
+  paymentTerms         String
+  mode                 String
+  godown               String
+  containerNo          String
+  sealNo               String
+  markNo               String
+  expectedDelivery     String
+  transporter          String
+  items                Json
+  totalWeight          Float
+  totalFreight         Int
+  createdBy            String
+  createdAt            DateTime @default(now())
+}
+
+model AuditLogEntry {
+  id        String   @id @default(cuid())
+  timestamp DateTime
+  userId    String
+  userName  String
+  role      String
+  action    String
+  details   Json
+
+  @@index([timestamp])
+}
+
+model PettyCash {
+  id             String   @id
+  tripId         String
+  driverId       String
+  driverName     String
+  tripRoute      String
+  issueDate      String
+  cashIssued     Int
+  expenses       Json
+  totalSpent     Int
+  balance        Int
+  status         String
+  settledDate    String?
+  notes          String
+  transferStatus String
+  transferAmount Int
+  transferMode   String
+  payoutId       String?
+  payoutTime     String?
+  failureReason  String?
+  createdAt      DateTime @default(now())
+}
+
+model FastagAccount {
+  vehicleId       String @id
+  regNumber       String
+  fastagId        String
+  bank            String
+  balance         Int
+  status          String
+  lastTransaction String
+}
+
+model FastagTransaction {
+  txnId     String   @id
+  vehicleId String
+  regNumber String
+  bank      String
+  plaza     String
+  highway   String
+  amount    Int
+  timestamp String
+  tripId    String?
+  matched   Boolean
+  createdAt DateTime @default(now())
+}
+
+model PayoutPool {
+  id                  String @id @default("singleton")
+  totalLoaded         Int
+  balance             Int
+  lowBalanceThreshold Int
+}
+
+model SparePart {
+  id           String @id
+  partNo       String
+  name         String
+  category     String
+  unit         String
+  currentStock Int
+  reorderLevel Int
+  unitPrice    Int
+  vendor       String
+  location     String
+}
+
+model SpareLedgerEntry {
+  id           String   @id
+  partId       String
+  partName     String
+  type         String
+  quantity     Int
+  date         String
+  vehicleId    String?
+  regNumber    String?
+  reference    String
+  vendor       String?
+  unitPrice    Int
+  notes        String
+  balanceAfter Int
+  performedBy  String
+  createdAt    DateTime @default(now())
+}
+
+model Tyre {
+  id                String   @id
+  vehicleId         String
+  regNumber         String
+  serialNo          String
+  brand             String
+  model             String
+  size              String
+  type              String
+  position          String
+  purchaseDate      String
+  purchasePrice     Int
+  vendor            String
+  invoiceNo         String
+  warrantyType      String
+  warrantyKm        Int
+  warrantyExpiry    String?
+  kmAtFitment       Int
+  expectedLifeKm    Int
+  currentKmRun      Int
+  treadDepth        Int
+  lastPressureCheck String
+  lastRotationDate  String?
+  retreads          Int
+  status            String
+  notes             String
+  createdAt         DateTime @default(now())
+}

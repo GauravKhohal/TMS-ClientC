@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment files — NEVER commit these (contain API keys & secrets)
+.env
+.env.local
+.env*.local
+backend/.env
+
+# Next.js build output
+frontend/.next/
+frontend/out/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Runtime-generated audit trail (differs per environment, grows over time)
+backend/data/auditLog.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Office temp/lock files
+~$*
+*.xlsx
+*.xls
+*.docx
+*.doc
+*.txt
+
+# Editor
+.vscode/
+*.swp

@@ -1,0 +1,53 @@
+{
+  "general": [
+    {
+      "id": "seed-g1",
+      "channelId": "general",
+      "userId": "U001",
+      "userName": "Admin User",
+      "role": "Super Admin",
+      "text": "Welcome to TransportMS Chat! Use channels to communicate with your team.",
+      "timestamp": "2026-06-04T11:32:22.200Z"
+    },
+    {
+      "id": "seed-g2",
+      "channelId": "general",
+      "userId": "U002",
+      "userName": "Priya Mehta",
+      "role": "Fleet Manager",
+      "text": "Thanks! This will make coordination much easier.",
+      "timestamp": "2026-06-04T12:32:22.202Z"
+    }
+  ],
+  "fleet": [
+    {
+      "id": "seed-f1",
+      "channelId": "fleet",
+      "userId": "U002",
+      "userName": "Priya Mehta",
+      "role": "Fleet Manager",
+      "text": "V004 (DL-01-GH-3456) is under maintenance. ETA for completion is tomorrow.",
+      "timestamp": "2026-06-05T09:32:22.204Z"
+    },
+    {
+      "id": "seed-f2",
+      "channelId": "fleet",
+      "userId": "U001",
+      "userName": "Admin User",
+      "role": "Super Admin",
+      "text": "Noted. Ensure fitness certificate is renewed before putting back on road.",
+      "timestamp": "2026-06-05T09:35:42.204Z"
+    }
+  ],
+  "accounts": [
+    {
+      "id": "seed-a1",
+      "channelId": "accounts",
+      "userId": "U004",
+      "userName": "Nisha Patel",
+      "role": "Accountant",
+      "text": "Petty cash reconciliation for May is pending from 3 drivers. Please follow up.",
+      "timestamp": "2026-06-05T10:32:22.206Z"
+    }
+  ]
+}

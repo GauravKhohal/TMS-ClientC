@@ -1,0 +1,138 @@
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "role" TEXT NOT NULL,
+    "status" TEXT NOT NULL,
+    "lastLogin" TIMESTAMP(3),
+    "permissions" JSONB NOT NULL,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Vehicle" (
+    "id" TEXT NOT NULL,
+    "regNumber" TEXT NOT NULL,
+    "make" TEXT NOT NULL,
+    "model" TEXT NOT NULL,
+    "year" INTEGER NOT NULL,
+    "category" TEXT NOT NULL,
+    "ownershipType" TEXT NOT NULL,
+    "capacity" TEXT NOT NULL,
+    "fuelType" TEXT NOT NULL,
+    "status" TEXT NOT NULL,
+    "driverId" TEXT,
+    "odometer" INTEGER NOT NULL,
+    "location" JSONB NOT NULL,
+    "speed" INTEGER NOT NULL,
+    "lastService" TEXT NOT NULL,
+    "insurance" TEXT NOT NULL,
+    "fitness" TEXT NOT NULL,
+    "permit" TEXT NOT NULL,
+    "utilization" INTEGER NOT NULL,
+    "purchasedAgency" TEXT NOT NULL,
+    "vehicleValue" INTEGER NOT NULL,
+    "emiEnabled" TEXT NOT NULL,
+    "monthlyEMI" INTEGER NOT NULL,
+    "loanBank" TEXT NOT NULL,
+
+    CONSTRAINT "Vehicle_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Driver" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "altPhone" TEXT NOT NULL,
+    "dob" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
+    "dlNumber" TEXT NOT NULL,
+    "licenseCategory" TEXT NOT NULL,
+    "licenseExpiry" TEXT NOT NULL,
+    "experience" INTEGER NOT NULL,
+    "emergencyContact" TEXT NOT NULL,
+    "status" TEXT NOT NULL,
+    "assignedVehicle" TEXT,
+    "fuelScore" INTEGER NOT NULL,
+    "safetyScore" INTEGER NOT NULL,
+    "onTimeDelivery" INTEGER NOT NULL,
+    "customerRating" DOUBLE PRECISION NOT NULL,
+    "totalTrips" INTEGER NOT NULL,
+    "totalKm" INTEGER NOT NULL,
+    "violations" INTEGER NOT NULL,
+    "salary" INTEGER NOT NULL,
+    "advance" INTEGER NOT NULL,
+    "attendance" INTEGER NOT NULL,
+    "aadhaarNumber" TEXT NOT NULL,
+    "panNumber" TEXT NOT NULL,
+    "supervisorName" TEXT NOT NULL,
+    "supervisorHistory" JSONB NOT NULL,
+
+    CONSTRAINT "Driver_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Trip" (
+    "id" TEXT NOT NULL,
+    "voucherNo" TEXT NOT NULL,
+    "origin" TEXT NOT NULL,
+    "destination" TEXT NOT NULL,
+    "stops" JSONB NOT NULL,
+    "viaStops" JSONB NOT NULL,
+    "status" TEXT NOT NULL,
+    "approvalStatus" TEXT NOT NULL,
+    "rejectionReason" TEXT NOT NULL,
+    "driverId" TEXT,
+    "vehicleId" TEXT,
+    "customer" TEXT NOT NULL,
+    "contactPerson" TEXT NOT NULL,
+    "contactNo" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
+    "category" TEXT NOT NULL,
+    "segment" TEXT NOT NULL,
+    "businessGroup" TEXT NOT NULL,
+    "employeeId" TEXT NOT NULL,
+    "placementDate" TEXT NOT NULL,
+    "noOfVehicles" INTEGER NOT NULL,
+    "vehicleLoadType" TEXT NOT NULL,
+    "cargo" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "rateType" TEXT NOT NULL,
+    "weight" DOUBLE PRECISION NOT NULL,
+    "packages" INTEGER NOT NULL,
+    "rate" INTEGER NOT NULL,
+    "freight" INTEGER NOT NULL,
+    "loadingCharges" INTEGER NOT NULL,
+    "unloadingCharges" INTEGER NOT NULL,
+    "otherCharges" INTEGER NOT NULL,
+    "commission" INTEGER NOT NULL,
+    "advance" INTEGER NOT NULL,
+    "paymentTerms" TEXT NOT NULL,
+    "creditDays" INTEGER NOT NULL,
+    "total" INTEGER NOT NULL,
+    "balance" INTEGER NOT NULL,
+    "volume" INTEGER NOT NULL,
+    "plannedDate" TEXT NOT NULL,
+    "actualDeparture" TEXT,
+    "eta" TEXT NOT NULL,
+    "distance" INTEGER NOT NULL,
+    "approxTimeHrs" INTEGER NOT NULL,
+    "plannedKm" INTEGER NOT NULL,
+    "actualKm" INTEGER NOT NULL,
+    "tollCost" INTEGER NOT NULL,
+    "fuelCost" INTEGER NOT NULL,
+    "revenue" INTEGER NOT NULL,
+    "pod" BOOLEAN NOT NULL,
+    "delay" INTEGER NOT NULL,
+    "notes" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Trip_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
