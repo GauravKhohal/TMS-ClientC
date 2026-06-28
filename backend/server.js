@@ -55,8 +55,20 @@ async function loadFromDatabase() {
   ]);
   // DB is always authoritative — no fallback to mock data
   users.splice(0, users.length, ...dbUsers);
-  vehicles.splice(0, vehicles.length, ...dbVehicles.map(({ driverId, ...v }) => ({ ...v, driver: driverId })));
-  drivers.splice(0, drivers.length, ...dbDrivers);
+  // rcVerification/dlVerification/panVerification have no Postgres column (see
+  // VEHICLE_MOCK_ONLY_FIELDS/DRIVER_MOCK_ONLY_FIELDS) — default them here so rows
+  // loaded straight from the DB (e.g. via seed scripts) match the shape that
+  // newly-created-via-UI records get, since the frontend reads these without a
+  // null check.
+  vehicles.splice(0, vehicles.length, ...dbVehicles.map(({ driverId, rcVerification, ...v }) => ({
+    ...v, driver: driverId,
+    rcVerification: rcVerification || { status: 'Not Verified', lastChecked: null, refId: null, source: 'Parivahan (VAHAN)', details: null },
+  })));
+  drivers.splice(0, drivers.length, ...dbDrivers.map(({ dlVerification, panVerification, ...d }) => ({
+    ...d,
+    dlVerification: dlVerification || { status: 'Not Verified', lastChecked: null, refId: null, source: 'Parivahan (Sarathi)', details: null },
+    panVerification: panVerification || { status: 'Not Verified', lastChecked: null, refId: null, source: 'NSDL e-Gov', details: null },
+  })));
   trips.splice(0, trips.length, ...dbTrips);
   fuelEntries.splice(0, fuelEntries.length, ...dbFuelEntries);
   maintenanceRecords.splice(0, maintenanceRecords.length, ...dbMaintenanceRecords);
