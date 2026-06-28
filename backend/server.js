@@ -138,6 +138,10 @@ function tripDbFields(t) {
 }
 
 const app = express();
+// Railway terminates TLS at its edge proxy and forwards via X-Forwarded-For;
+// without this, express-rate-limit throws (it refuses to trust that header
+// for IP-based limiting unless the app explicitly opts in).
+app.set('trust proxy', 1);
 const server = http.createServer(app);
 const PORT = process.env.PORT || 5001;
 if (!process.env.JWT_SECRET) {
