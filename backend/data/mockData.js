@@ -17,7 +17,26 @@ const users = [];
 
 // Operational data — in-memory, cleared for production
 const alerts              = [];
-const costings            = [];
+
+// Trip Settlement (costing) — per-trip cost breakdown for completed/in-progress trips.
+// No Prisma model exists for this yet; kept in-memory like alerts/analytics until migrated.
+const costings = [
+  { tripId: 'T001', fuel: 28000, toll: 350,  driver: 1200, maintenance: 800, tyre: 500, misc: 300, totalCost: 31150, revenue: 85000, profit: 53850, margin: 63, kmCost: 34 },
+  { tripId: 'T002', fuel: 9500,  toll: 180,  driver: 600,  maintenance: 400, tyre: 250, misc: 150, totalCost: 11080, revenue: 54000, profit: 42920, margin: 79, kmCost: 40 },
+  { tripId: 'T004', fuel: 21000, toll: 0,    driver: 1000, maintenance: 700, tyre: 400, misc: 300, totalCost: 23400, revenue: 41600, profit: 18200, margin: 44, kmCost: 30 },
+  { tripId: 'T005', fuel: 24500, toll: 270,  driver: 1100, maintenance: 750, tyre: 450, misc: 280, totalCost: 27350, revenue: 78000, profit: 50650, margin: 65, kmCost: 33 },
+  { tripId: 'T007', fuel: 19000, toll: 0,    driver: 900,  maintenance: 600, tyre: 350, misc: 250, totalCost: 21100, revenue: 92000, profit: 70900, margin: 77, kmCost: 29 },
+  { tripId: 'T008', fuel: 11500, toll: 0,    driver: 500,  maintenance: 350, tyre: 200, misc: 150, totalCost: 12700, revenue: 76000, profit: 63300, margin: 83, kmCost: 41 },
+  { tripId: 'T009', fuel: 9300,  toll: 180,  driver: 600,  maintenance: 400, tyre: 250, misc: 150, totalCost: 10880, revenue: 58000, profit: 47120, margin: 81, kmCost: 40 },
+  { tripId: 'T010', fuel: 29500, toll: 270,  driver: 1200, maintenance: 850, tyre: 500, misc: 300, totalCost: 32620, revenue: 81000, profit: 48380, margin: 60, kmCost: 36 },
+  { tripId: 'T011', fuel: 24000, toll: 180,  driver: 1100, maintenance: 750, tyre: 450, misc: 280, totalCost: 26760, revenue: 76000, profit: 49240, margin: 65, kmCost: 33 },
+  { tripId: 'T012', fuel: 7800,  toll: 0,    driver: 500,  maintenance: 300, tyre: 150, misc: 150, totalCost: 8900,  revenue: 24000, profit: 15100, margin: 63, kmCost: 16 },
+  { tripId: 'T013', fuel: 14200, toll: 0,    driver: 950,  maintenance: 650, tyre: 400, misc: 250, totalCost: 16450, revenue: 43000, profit: 26550, margin: 62, kmCost: 21 },
+  { tripId: 'T014', fuel: 18200, toll: 0,    driver: 900,  maintenance: 600, tyre: 350, misc: 250, totalCost: 20300, revenue: 89000, profit: 68700, margin: 77, kmCost: 28 },
+  { tripId: 'T015', fuel: 10800, toll: 0,    driver: 450,  maintenance: 300, tyre: 200, misc: 150, totalCost: 11900, revenue: 61000, profit: 49100, margin: 81, kmCost: 34 },
+  { tripId: 'T016', fuel: 11200, toll: 0,    driver: 500,  maintenance: 350, tyre: 200, misc: 150, totalCost: 12400, revenue: 79000, profit: 66600, margin: 84, kmCost: 40 },
+];
+
 const tollReconciliations = [];
 const pettyCash           = [];
 const fastagAccounts      = [];
