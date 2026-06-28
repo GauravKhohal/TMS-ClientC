@@ -387,6 +387,32 @@ app.patch('/api/fleet/:id/emi-payment', auth, (req, res) => {
   res.json({ success: true, vehicle: v });
 });
 
+// GPS ingestion — generic webhook any telematics vendor's adapter can push to.
+// Authenticated with a shared API key (not a user JWT) since the caller is a
+// device/vendor backend, not a logged-in user. Vendor-specific payload formats
+// should be translated to this shape in a small adapter, not here.
+app.post('/api/gps/ping', (req, res) => {
+  const expectedKey = process.env.GPS_INGEST_KEY;
+  if (!expectedKey) return res.status(503).json({ error: 'GPS ingestion not configured (GPS_INGEST_KEY unset)' });
+  if (req.headers['x-api-key'] !== expectedKey) return res.status(401).json({ error: 'Invalid API key' });
+
+  const { vehicleId, regNumber, lat, lng, speed } = req.body;
+  if (typeof lat !== 'number' || typeof lng !== 'number') return res.status(400).json({ error: 'lat and lng must be numbers' });
+
+  const v = vehicleId ? vehicles.find(v => v.id === vehicleId) : vehicles.find(v => v.regNumber === regNumber);
+  if (!v) return res.status(404).json({ error: 'Vehicle not found (provide vehicleId or regNumber)' });
+
+  v.location = { lat, lng };
+  if (typeof speed === 'number') v.speed = speed;
+  const timestamp = new Date().toISOString();
+
+  prisma.vehicle.update({ where: { id: v.id }, data: { location: v.location, speed: v.speed } })
+    .catch(e => console.error('GPS ping: DB update failed:', e.message));
+
+  io.emit('gps:update', { vehicleId: v.id, regNumber: v.regNumber, lat, lng, speed: v.speed, timestamp });
+  res.json({ success: true });
+});
+
 // Drivers
 app.get('/api/drivers', auth, (req, res) => res.json(drivers));
 app.get('/api/drivers/:id', auth, (req, res) => {

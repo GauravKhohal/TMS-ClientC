@@ -4,6 +4,7 @@
 export const PAGE_ROLES: Record<string, string[]> = {
   '/dashboard':   ['Super Admin', 'Fleet Manager', 'Dispatcher', 'Accountant', 'Viewer'],
   '/fleet':       ['Super Admin', 'Fleet Manager', 'Dispatcher', 'Viewer'],
+  '/tracking':    ['Super Admin', 'Fleet Manager', 'Dispatcher', 'Viewer'],
   '/drivers':     ['Super Admin', 'Fleet Manager', 'Dispatcher', 'Viewer'],
   '/trips':       ['Super Admin', 'Fleet Manager', 'Dispatcher', 'Viewer'],
   '/fuel':        ['Super Admin', 'Fleet Manager', 'Accountant', 'Viewer'],
